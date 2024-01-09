@@ -4,7 +4,7 @@ import { BsTrash, BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
 import axios from 'axios';
 
 //Endereço base da API
-const API="https://api-notes-eta.vercel.app";
+const API="https://api-notes-lake.vercel.app";
 
 function App() {
   const [title, setTitle] = useState("");
