@@ -1,99 +1,76 @@
 import './App.css';
-import {useState,useEffect} from "react";
-import {BsTrash,BsBookmarkCheck,BsBookmarkCheckFill} from "react-icons/bs";
-
+import { useState, useEffect } from "react";
+import { BsTrash, BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs";
+import axios from 'axios';
 
 //Endereço base da API
-const API="https://api-notes-chi.vercel.app/";
-
-
+const API="https://api-notes-eta.vercel.app";
 
 function App() {
- 
-  const [title,setTitle]=useState("")
-  const [time,setTime]=useState("")
-  const [listDo,setListDo]=useState([])
-  const [loading,setLoading]=useState(false)
+  const [title, setTitle] = useState("");
+  const [time, setTime] = useState("");
+  const [listDo, setListDo] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`${API}/listdo`);
+        setListDo(response.data);
+      } catch (error) {
+        console.error("Erro na requisição:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    const loadData= async()=>{
+    loadData();
+  }, []);
 
-      setLoading(true)
-       const res= await fetch(API+"/listdo")
-       .then((res)=>res.json())
-       .then((data)=>data)
-       .catch((err)=>console.log(err))
-      
-      setLoading(false);
-      setListDo(res)
+  const handleEdit = async (list) => {
+    list.done = !list.done;
+    try {
+      await axios.put(`${API}/listdo/${list.id}`, list);
+      setListDo((prevState) =>
+        prevState.map((item) => (item.id === list.id ? { ...item, ...list } : item))
+      );
+    } catch (error) {
+      console.error("Erro na requisição:", error);
     }
+  };
 
-    loadData()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  },[])
-
-  const handleEdit = async (list)=>{
-    list.done=!list.done
-
-    const data=await fetch(API +"/listdo/"+list.id,{
-      method:"PUT",
-      body: JSON.stringify(list),
-      headers:{
-        "Content-Type":"application/json",
-      },
-    });
-
-    setListDo((preventState)=>(preventState.map((item)=>(item.id===data.id?{...item,data}:item))))
-
-
-  }
-
-  const handleSubmit= async (e)=>{
-    e.preventDefault()
-
-    const list={
-      //gera um número inteiro aleatório entre 1 e 10000
+    const newList = {
       id: Math.floor(Math.random() * (10000 - 1) + 1),
       title,
       time,
-      done:false
+      done: false,
     };
 
-    await fetch(API +"/listdo",{
-      method:"POST",
-      body: JSON.stringify(list),
-      headers:{
-        "Content-Type":"application/json",
-      },
-    });
+    try {
+      await axios.post(`${API}/listdo`, newList);
+      setListDo((prevState) => [...prevState, newList]);
+      setTitle("");
+      setTime("");
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+    }
+  };
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${API}/listdo/${id}`);
+      setListDo((prevState) => prevState.filter((list) => list.id !== id));
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+    }
+  };
 
-    setListDo((prevState)=>[...prevState, list])
-  
-   
-  
-    console.log(list)
-    setTitle("")
-    setTime("")
-
-  }
-
-  const handleDelete= async (id)=>{
-
-    await fetch(API +"/listdo/"+id,{
-      method:"DELETE",
-      
-    });
-
-    setListDo((prevState)=>prevState.filter((list)=>list.id!==id))
-
-  }
-
-  if(loading){
-    return (
-      <h1>Carregando...</h1>
-    )
+  if (loading) {
+    return <h1>Carregando...</h1>;
   }
 
   
