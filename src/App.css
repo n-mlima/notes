@@ -1,0 +1,96 @@
+.App{
+  width: 40%;
+  background-color: rgb(10, 202, 228);
+  color:black;
+  border-radius: 5px;
+  margin: 2em auto;
+
+}
+
+.list-header{
+  display: flex;
+  justify-content: center;
+  gap: 0.5em;
+  align-items: center;
+  text-align: center;
+  border-bottom: 1px solid rgb(65, 44, 44);
+  padding: 0.5em;
+}
+.list-header h1{
+  margin: 0;
+}
+.list-form{
+  padding: 2em;
+  border-bottom: 1px solid rgb(65, 44, 44);
+}
+.list-form h2{
+
+  text-align: center;
+ 
+}
+.form-submit{
+  display: flex;
+  flex-direction: column;
+  gap:0.5em;
+  padding: 0.5em;
+  
+  border-bottom: 1px solid rgb(65, 44, 44);
+}
+input[type="text"]{
+  font-size: 1em;
+  
+
+}
+input[type="submit"]{
+  border:none;
+  display: block;
+  width: 100%;
+  font-size: 1em;
+  background-color: black;
+  color: white;
+  padding: 0.5em;
+  text-align: center;
+  cursor: pointer;
+
+}
+
+.list-view h3{
+ text-align: center;  
+}
+
+.list-view{
+  padding: 0.8em;
+
+}
+.list{
+  padding-bottom: 1em;
+}
+p{
+  margin: 0.3em;
+}
+h1{
+  font-size: 1.5em;
+}
+
+h3{
+  text-align: center;
+}
+svg{
+  padding-top: 0.3em;
+  padding-right: 0.5em;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+.p-time{
+  font-size:0.7em;
+  font-style: italic;
+
+}
+.todo-done{
+  text-decoration: line-through;
+  color:blue;
+  transition: 0.5s;
+}
+.todo-done:hover{
+  color:black
+}

@@ -1,0 +1,14 @@
+html{
+  background: linear-gradient(
+    195deg,
+    rgba(139, 100, 231, 0.274) 0%,
+    rgba(40, 144, 214, 0.534) 98%
+  );
+  
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica;
+}
